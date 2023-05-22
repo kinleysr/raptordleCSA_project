@@ -59,11 +59,19 @@ public class BirdList extends JFrame{
 
     public Bird findBird(String name){
         for (Bird bird : gameList) {
+            // if(bird.getName().equals(null)){
+            //     JOptionPane.showMessageDialog(null, "no bird found.  Try again. make sure you have the correct spelling/capitalization");
+            //     findBird(guesser());
+            // }
             if(bird.getName().equals(name)){
                 return bird;
             }
+            
         }
-        return null;
+            JOptionPane.showMessageDialog(null, "no bird found.  Try again. make sure you have the correct spelling/capitalization");
+            return findBird(guesser());
+        
+        //return null;
     }
 
     public void processGuess(Bird guess){
