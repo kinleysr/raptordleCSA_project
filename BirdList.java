@@ -25,12 +25,12 @@ public class BirdList extends JFrame{
             count++;
             Bird birdGuess = findBird(guesser());
             if(sameBird(birdGuess)){
-                JOptionPane.showMessageDialog(null, "Nice job!");
+                JOptionPane.showMessageDialog(null, "Nice job!  The correct answer is "+ ans.getName()+".  You got it with "+count +" guesses");
                 return;
             }
             processGuess(birdGuess);
         }
-        JOptionPane.showMessageDialog(null, "Out of guesses.  Better luck next time!");
+        JOptionPane.showMessageDialog(null, "Out of guesses.  The correct answer is " + ans.getName()  + ".  Better luck next time!");
     }
 
     public void playAgain(){
