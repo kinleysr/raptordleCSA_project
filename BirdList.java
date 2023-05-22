@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Scanner;
 import javax.swing.*;
 import javax.swing.JFrame;
 import javax.swing.ImageIcon;
@@ -15,30 +14,35 @@ public class BirdList extends JFrame{
         createList();
         ans = generateBird();
         setUp(ans.getName());
+        runTurn();
 
-        // Scanner myObj = new Scanner(System.in);  // Create a Scanner object
-        // System.out.println("Enter bird");
-        // Bird birdGuess = findBird(myObj.nextLine());  // Read user input
-        
+
     }
 
     public void runTurn(){
-        count++;
-        if(count < 6){
+        //count++;
+        while(count < 6){
+            count++;
             Bird birdGuess = findBird(guesser());
-            processGuess(birdGuess);//replace ans w guess
+            if(sameBird(birdGuess)){
+                JOptionPane.showMessageDialog(null, "Nice job!");
+                return;
+            }
+            processGuess(birdGuess);
         }
+        JOptionPane.showMessageDialog(null, "Out of guesses.  Better luck next time!");
+    }
+
+    public void playAgain(){
+
     }
 
     public void setUp(String bird){
-        // JFrame frame = new JFrame("Raptordle");
-        // frame.setSize(750, 750);
-        // frame.setLocationRelativeTo(null);
-        // frame.setVisible(true);
         var f = new JFrame();
         var icon = new ImageIcon(bird+".jpg");
         var label = new JLabel(icon);
         f.add(label);
+        f.setSize(1000, 1000);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.pack();
         f.setVisible(true);
@@ -63,16 +67,13 @@ public class BirdList extends JFrame{
     }
 
     public void processGuess(Bird guess){
-        if(sameBird(guess)){
-            JOptionPane.showMessageDialog(null, "Yes!");;
-            //guess again
-        }else
         if(related(guess)){
-            
-            JOptionPane.showMessageDialog(null, "close!");
+            JOptionPane.showMessageDialog(null, 
+            "close!  "+"you have "+Integer.toString(6-count)+" guesses remaining.");
             //share relatednessr
         }else
-        JOptionPane.showMessageDialog(null, "no.");
+        JOptionPane.showMessageDialog(null,
+        "no.  "+"you have "+Integer.toString(6-count)+" guesses remaining.");
         //end game
     }
 
