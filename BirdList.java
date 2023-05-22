@@ -2,8 +2,11 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 
-public class BirdList{
+public class BirdList extends JFrame{
     Random r = new Random();
     ArrayList<Bird> gameList = new ArrayList<Bird>();
     Bird ans;
@@ -11,7 +14,7 @@ public class BirdList{
     public BirdList(){
         createList();
         ans = generateBird();
-        setUp();
+        setUp(ans.getName());
 
         // Scanner myObj = new Scanner(System.in);  // Create a Scanner object
         // System.out.println("Enter bird");
@@ -27,12 +30,19 @@ public class BirdList{
         }
     }
 
-    public void setUp(){
-        JFrame frame = new JFrame("Raptordle");
-        frame.setSize(750, 750);
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
-
+    public void setUp(String bird){
+        // JFrame frame = new JFrame("Raptordle");
+        // frame.setSize(750, 750);
+        // frame.setLocationRelativeTo(null);
+        // frame.setVisible(true);
+        var f = new JFrame();
+        var icon = new ImageIcon(bird+".jpg");
+        var label = new JLabel(icon);
+        f.add(label);
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        f.pack();
+        f.setVisible(true);
+        
        
     }
     public String guesser(){
