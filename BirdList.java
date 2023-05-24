@@ -4,17 +4,22 @@ import javax.swing.*;
 import javax.swing.JFrame;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import java.awt.event.*;
 
-public class BirdList extends JFrame{
+public class BirdList extends JPanel implements ActionListener {
     Random r = new Random();
     ArrayList<Bird> gameList = new ArrayList<Bird>();
     Bird ans;
     int count;
+    JLabel l;
+    JTextField t;
+    JFrame f;
+    
     public BirdList(){
         createList();
         ans = generateBird();
         setUp(ans.getName());
-        runTurn();
+       // runTurn();
 
 
     }
@@ -38,11 +43,25 @@ public class BirdList extends JFrame{
     }
 
     public void setUp(String bird){
-        var f = new JFrame();
+        f = new JFrame();
         var icon = new ImageIcon(bird+".jpg");
+        
+        t = new JTextField(27);
         var label = new JLabel(icon);
-        f.add(label);
-        f.setSize(1000, 1000);
+        //JPanel p = new JPanel();
+        JButton b = new JButton("submit");
+        l = new JLabel("enter bird: ");
+        
+        
+        // // addActionListener to button
+        // b.addActionListener(te);
+        b.addActionListener(this);
+        this.add(label);
+        this.add(l);
+        this.add(t);
+        this.add(b);
+        f.add(this);
+        f.setSize(500, 1000);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.pack();
         f.setVisible(true);
@@ -104,6 +123,28 @@ public class BirdList extends JFrame{
     public Bird generateBird(){
         return gameList.get(r.nextInt(gameList.size()-1));
     }
+    public void actionPerformed(ActionEvent e)
+    {
+        String s = e.getActionCommand();
+        String birdEntry = t.getText();
+        if (s.equals("submit")) {
+            System.out.println("xxx");
+            // set the text of the label to the text of the field
+            if(ans.getName().equals(birdEntry)){
+                System.out.println("yes");
+                return;
+            }else if(ans.getGenus().equals(findBird(birdEntry).getGenus())){
+                System.out.println("close");
+                return;
+            }
+            l.setText(t.getText());
+            System.out.println("afs");
+            // set the text of field to blank
+            t.setText("  ");
+        }
+    }
+
+
 
     public ArrayList<Bird> createList(){
         gameList.add(new Bird("American Kestrel","Falco"));
