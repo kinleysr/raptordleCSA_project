@@ -13,7 +13,10 @@ public class BirdList extends JPanel implements ActionListener {
     int count;
     JLabel l;
     JTextField t;
+    JLabel result;
+    ArrayList<String> guesses = new ArrayList<String>();
     JFrame f;
+    
     
     public BirdList(){
         createList();
@@ -41,6 +44,9 @@ public class BirdList extends JPanel implements ActionListener {
     public void playAgain(){
 
     }
+    public boolean checkGuesses(){
+        return (count<=6);
+    }
 
     public void setUp(String bird){
         f = new JFrame();
@@ -51,7 +57,8 @@ public class BirdList extends JPanel implements ActionListener {
         //JPanel p = new JPanel();
         JButton b = new JButton("submit");
         l = new JLabel("enter bird: ");
-        
+        result = new JLabel("");
+       
         
         // // addActionListener to button
         // b.addActionListener(te);
@@ -60,17 +67,19 @@ public class BirdList extends JPanel implements ActionListener {
         this.add(l);
         this.add(t);
         this.add(b);
+        this.add(result);
+        
         f.add(this);
-        f.setSize(500, 1000);
+        f.setSize(750, 1000);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.pack();
         f.setVisible(true);
-        
+        result.setBounds(150, 100, 50,50);        
        
     }
     public String guesser(){
-        String bird = JOptionPane.showInputDialog(null,
-         "Please enter a bird.");
+        System.out.println("test2");
+        String bird = t.getText();
         System.out.println(bird);
         //JTextField userField = new JTextField();
         return bird;
@@ -83,24 +92,26 @@ public class BirdList extends JPanel implements ActionListener {
             //     findBird(guesser());
             // }
             if(bird.getName().equals(name)){
+                System.out.println("test1");
                 return bird;
+
             }
             
         }
-            JOptionPane.showMessageDialog(null, "no bird found.  Try again. make sure you have the correct spelling/capitalization");
+            new JLabel("no bird found.  Try again. make sure you have the correct spelling/capitalization");
             return findBird(guesser());
+            // System.out.println("sdfdsafasd");
+            // return null;
         
         //return null;
     }
 
     public void processGuess(Bird guess){
         if(related(guess)){
-            JOptionPane.showMessageDialog(null, 
-            "close!  "+"you have "+Integer.toString(6-count)+" guesses remaining.");
+            new JLabel("close!  "+"you have "+Integer.toString(6-count)+" guesses remaining.");
             //share relatednessr
         }else
-        JOptionPane.showMessageDialog(null,
-        "no.  "+"you have "+Integer.toString(6-count)+" guesses remaining.");
+        new JLabel("no.  "+"you have "+Integer.toString(6-count)+" guesses remaining.");
         //end game
     }
 
@@ -125,23 +136,31 @@ public class BirdList extends JPanel implements ActionListener {
     }
     public void actionPerformed(ActionEvent e)
     {
+        count++;
+        if(checkGuesses()){
+        System.out.println("test");
         String s = e.getActionCommand();
         String birdEntry = t.getText();
+        guesses.add(birdEntry);
+        t.setText("");
         if (s.equals("submit")) {
             System.out.println("xxx");
             // set the text of the label to the text of the field
             if(ans.getName().equals(birdEntry)){
                 System.out.println("yes");
+                result.setText("yes");
                 return;
             }else if(ans.getGenus().equals(findBird(birdEntry).getGenus())){
                 System.out.println("close");
                 return;
+            }else{
+                System.out.println("no");
             }
-            l.setText(t.getText());
-            System.out.println("afs");
+        }}else
+        System.out.println("out of guesses");
             // set the text of field to blank
-            t.setText("  ");
-        }
+            
+        
     }
 
 
