@@ -74,7 +74,7 @@ public class BirdList extends JPanel implements ActionListener {
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.pack();
         f.setVisible(true);
-        result.setBounds(150, 100, 50,50);        
+        result.setBounds(400, 400, 50,50);        
        
     }
     public String guesser(){
@@ -152,9 +152,11 @@ public class BirdList extends JPanel implements ActionListener {
                 return;
             }else if(ans.getGenus().equals(findBird(birdEntry).getGenus())){
                 System.out.println("close");
+                result.setText("related");
                 return;
             }else{
                 System.out.println("no");
+                result.setText("nope");
             }
         }}else
         System.out.println("out of guesses");
