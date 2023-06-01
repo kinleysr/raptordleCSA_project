@@ -5,6 +5,8 @@ import javax.swing.JFrame;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import java.awt.event.*;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
 
 public class BirdList extends JPanel implements ActionListener {
     Random r = new Random();
@@ -14,8 +16,19 @@ public class BirdList extends JPanel implements ActionListener {
     JLabel l;
     JTextField t;
     JLabel result;
+    JLabel guess1;
+    JLabel guess2;
+    JLabel guess3;
+    JLabel guess4;
+    JLabel guess5;
+    JLabel guess6;
     ArrayList<String> guesses = new ArrayList<String>();
     JFrame f;
+    GridBagLayout layout = new GridBagLayout();
+    GridBagConstraints gbc = new GridBagConstraints();
+    ArrayList<JLabel> labelGuess = new ArrayList<JLabel>();
+    JLabel endWords;
+    
     
     
     public BirdList(){
@@ -51,30 +64,90 @@ public class BirdList extends JPanel implements ActionListener {
     public void setUp(String bird){
         f = new JFrame();
         var icon = new ImageIcon(bird+".jpg");
-        
         t = new JTextField(27);
         var label = new JLabel(icon);
         //JPanel p = new JPanel();
         JButton b = new JButton("submit");
         l = new JLabel("enter bird: ");
-        result = new JLabel("");
+        guess1 = new JLabel("1");
+        guess2 = new JLabel("2");
+        guess3 = new JLabel("3");
+        guess4 = new JLabel("4");
+        guess5 = new JLabel("5");
+        guess6 = new JLabel("6");
+        labelGuess.add(guess1);
+        labelGuess.add(guess2);
+        labelGuess.add(guess3);
+        labelGuess.add(guess4);
+        labelGuess.add(guess5);
+        labelGuess.add(guess6);
+        endWords = new JLabel("");
+        this.setLayout(layout);
+        //guess1 = new JLabel("  ");
        
-        
+
+        //gridlayout format
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+         gbc.gridx = 3;
+        gbc.gridy = 1;
+        // panel.add(new JButton("Button1"), gbc);
+ 
+        // gbc.gridx = 1;
+        // gbc.gridy = 0;
+        // panel.add(new JButton("Button 2"), gbc);
+ 
+        // gbc.gridx = 0;
+        // gbc.gridy = 2;
+        // gbc.fill = GridBagConstraints.HORIZONTAL;
+        // gbc.gridwidth = 2;
+        // panel.add(new JButton("Button 3"), abc);
+
+
         // // addActionListener to button
         // b.addActionListener(te);
         b.addActionListener(this);
-        this.add(label);
-        this.add(l);
-        this.add(t);
-        this.add(b);
-        this.add(result);
+        
+        this.add(label,gbc);
+        gbc.gridx=1;
+        gbc.gridy = 3;
+        this.add(l,gbc);
+        gbc.gridx=3;
+        gbc.gridy=3;
+        this.add(t,gbc);
+        gbc.gridx = 3;
+        gbc.gridy = 5;
+        this.add(guess1,gbc);
+        gbc.gridx = 3;
+        gbc.gridy = 6;
+        this.add(guess2,gbc);
+        gbc.gridx = 3;
+        gbc.gridy = 7;
+        this.add(guess3,gbc);
+        gbc.gridx = 3;
+        gbc.gridy = 8;
+        this.add(guess4,gbc);
+        gbc.gridx = 3;
+        gbc.gridy = 9;
+        this.add(guess5,gbc);
+        gbc.gridx = 3;
+        gbc.gridy = 10;
+        this.add(guess6,gbc);
+        gbc.gridx = 3;
+        gbc.gridy = 11;
+        this.add(b,gbc);
+        gbc.gridx = 3;
+        gbc.gridy=12;
+        this.add(endWords,gbc);
+        // gbc.gridx=3;
+        // gbc.gridy=8;
+        // this.add(guess1,gbc);
         
         f.add(this);
-        f.setSize(750, 1000);
+        f.setSize(500, 500);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.pack();
         f.setVisible(true);
-        result.setBounds(400, 400, 50,50);        
+        //result.setBounds(400, 400, 50,50);        
        
     }
     public String guesser(){
@@ -137,10 +210,12 @@ public class BirdList extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e)
     {
         count++;
+        
         if(checkGuesses()){
+        String birdEntry = t.getText();
         System.out.println("test");
         String s = e.getActionCommand();
-        String birdEntry = t.getText();
+       
         guesses.add(birdEntry);
         t.setText("");
         if (s.equals("submit")) {
@@ -148,18 +223,31 @@ public class BirdList extends JPanel implements ActionListener {
             // set the text of the label to the text of the field
             if(ans.getName().equals(birdEntry)){
                 System.out.println("yes");
-                result.setText("yes");
+                (labelGuess.get(count-1)).setText(birdEntry+": yes");
+                endWords.setText("congratulations, you guessed the bird!  it was a "+ birdEntry);
                 return;
             }else if(ans.getGenus().equals(findBird(birdEntry).getGenus())){
                 System.out.println("close");
-                result.setText("related");
+                labelGuess.get(count-1).setText(birdEntry+": related");
                 return;
             }else{
                 System.out.println("no");
-                result.setText("nope");
+                labelGuess.get(count-1).setText(birdEntry+": no");
+               
             }
-        }}else
+        }}else{
         System.out.println("out of guesses");
+        endWords.setText("out of guess.  the correct answer was a "+ ans.getName());
+        }
+        
+        // String temp = "";
+        // int num=1;
+        // for (String bird : guesses) {
+        //     temp += "Guess "+num+": "+bird;
+        //     num++; 
+        // }
+        // guess1.setText(temp);
+        
             // set the text of field to blank
             
         
