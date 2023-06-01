@@ -69,12 +69,12 @@ public class BirdList extends JPanel implements ActionListener {
         //JPanel p = new JPanel();
         JButton b = new JButton("submit");
         l = new JLabel("enter bird: ");
-        guess1 = new JLabel("1");
-        guess2 = new JLabel("2");
-        guess3 = new JLabel("3");
-        guess4 = new JLabel("4");
-        guess5 = new JLabel("5");
-        guess6 = new JLabel("6");
+        guess1 = new JLabel("");
+        guess2 = new JLabel("");
+        guess3 = new JLabel("");
+        guess4 = new JLabel("");
+        guess5 = new JLabel("");
+        guess6 = new JLabel("");
         labelGuess.add(guess1);
         labelGuess.add(guess2);
         labelGuess.add(guess3);
@@ -90,21 +90,6 @@ public class BirdList extends JPanel implements ActionListener {
         gbc.fill = GridBagConstraints.HORIZONTAL;
          gbc.gridx = 3;
         gbc.gridy = 1;
-        // panel.add(new JButton("Button1"), gbc);
- 
-        // gbc.gridx = 1;
-        // gbc.gridy = 0;
-        // panel.add(new JButton("Button 2"), gbc);
- 
-        // gbc.gridx = 0;
-        // gbc.gridy = 2;
-        // gbc.fill = GridBagConstraints.HORIZONTAL;
-        // gbc.gridwidth = 2;
-        // panel.add(new JButton("Button 3"), abc);
-
-
-        // // addActionListener to button
-        // b.addActionListener(te);
         b.addActionListener(this);
         
         this.add(label,gbc);
@@ -196,8 +181,8 @@ public class BirdList extends JPanel implements ActionListener {
         return false;
     }
     
-    public boolean related(Bird guess){
-        if(ans.compareGenus(guess)){
+    public boolean related(String guess){
+        if(ans.getName().equals(guess)){
             return true;
         }
         return false;
@@ -205,7 +190,7 @@ public class BirdList extends JPanel implements ActionListener {
 
 
     public Bird generateBird(){
-        return gameList.get(r.nextInt(gameList.size()-1));
+        return gameList.get(r.nextInt(gameList.size()));
     }
     public void actionPerformed(ActionEvent e)
     {
@@ -226,7 +211,7 @@ public class BirdList extends JPanel implements ActionListener {
                 (labelGuess.get(count-1)).setText(birdEntry+": yes");
                 endWords.setText("congratulations, you guessed the bird!  it was a "+ birdEntry);
                 return;
-            }else if(ans.getGenus().equals(findBird(birdEntry).getGenus())){
+            }else if(related(birdEntry)){
                 System.out.println("close");
                 labelGuess.get(count-1).setText(birdEntry+": related");
                 return;
