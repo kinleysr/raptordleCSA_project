@@ -35,7 +35,7 @@ public class BirdList extends JPanel implements ActionListener {
         createList();
         ans = generateBird();
         setUp(ans.getName());
-       // runTurn();
+       
 
 
     }
@@ -164,7 +164,7 @@ public class BirdList extends JPanel implements ActionListener {
         //return null;
     }
 
-    public void processGuess(Bird guess){
+    public void processGuess(String guess){
         if(related(guess)){
             new JLabel("close!  "+"you have "+Integer.toString(6-count)+" guesses remaining.");
             //share relatednessr
@@ -182,7 +182,7 @@ public class BirdList extends JPanel implements ActionListener {
     }
     
     public boolean related(String guess){
-        if(ans.getName().equals(guess)){
+        if(ans.compareGenus(findBird(guess))){
             return true;
         }
         return false;
